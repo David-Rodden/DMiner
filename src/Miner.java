@@ -22,7 +22,7 @@ public class Miner extends Script {
         getBot().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(final MouseEvent e) {
-                getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.getName().equals("Rocks")).forEach(entity -> {
+                getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.exists() && obj.hasAction("Mine")).forEach(entity -> {
                     log(rocks);
                     if (rocks.contains(entity)) rocks.remove(entity);
                     else rocks.add(entity);
@@ -70,7 +70,7 @@ public class Miner extends Script {
             GraphicUtilities.drawModel(getBot(), g, rock.getGridX(), rock.getGridY(), rock.getZ(), rock.getModel());
         }
         g.setPaint(selection);
-        getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.getName().equals("Rocks")).forEach(entity -> {
+        getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.exists() && obj.hasAction("Mine")).forEach(entity -> {
             GraphicUtilities.drawModel(getBot(), g, entity.getGridX(), entity.getGridY(), entity.getZ(), entity.getModel());
         });
     }
