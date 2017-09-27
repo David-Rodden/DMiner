@@ -19,7 +19,7 @@ public class Miner extends Script {
     @Override
     public void onStart() throws InterruptedException {
         rocks = new ArrayList<>();
-        gui = new MinerGUI();
+        gui = new MinerGUI(this);
         getBot().addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(final MouseEvent e) {

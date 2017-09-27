@@ -19,6 +19,10 @@ public class NFAHandler {
         return ref;
     }
 
+    protected void setRocks(final List<RS2Object> rocks) {
+        this.rocks = rocks;
+    }
+
     RS2Object getNearestRock() {
         return ref.getObjects().closest(rocks);
     }

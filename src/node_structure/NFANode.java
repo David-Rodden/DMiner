@@ -8,12 +8,12 @@ public abstract class NFANode {
     private NFAHandler handler;
     private String description;
 
-    protected NFANode(final NFAHandler handler, final String description) {
+    NFANode(final NFAHandler handler, final String description) {
         this.handler = handler;
         this.description = description;
     }
 
-    protected NFAHandler getHandler() {
+    NFAHandler getHandler() {
         return handler;
     }
 
@@ -23,7 +23,7 @@ public abstract class NFANode {
 
     protected abstract void transition();
 
-    protected void setSuccess(final NFANode success) {
+    void setSuccess(final NFANode success) {
         this.success = success;
     }
 
@@ -31,15 +31,15 @@ public abstract class NFANode {
         this.failure = failure;
     }
 
-    protected NFANode getSuccess() {
+    NFANode getSuccess() {
         return success;
     }
 
-    protected NFANode getFailure() {
+    NFANode getFailure() {
         return failure;
     }
 
-    protected void sleepUntil(final BooleanSupplier condition) {
+    void sleepUntil(final BooleanSupplier condition) {
         new SleepAction(condition, 3500).sleep();
     }
 }

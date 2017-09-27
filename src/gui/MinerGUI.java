@@ -1,7 +1,6 @@
 package gui;
 
 import node_structure.NFAHandler;
-import node_structure.NFANode;
 
 import javax.swing.*;
 
@@ -29,9 +28,7 @@ public class MinerGUI extends JFrame {
         setVisible(true);
     }
 
-    public NFANode formSent() {
-        //will check if the form has been sent to start the script
-        //return hasDisposed ? handler.getRef().
-        return null;
+    public boolean formSent() {
+        return hasDisposed;
     }
 }
