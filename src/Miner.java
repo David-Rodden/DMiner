@@ -1,3 +1,4 @@
+import gui.MinerGUI;
 import org.osbot.rs07.api.model.Entity;
 import org.osbot.rs07.api.util.GraphicUtilities;
 import org.osbot.rs07.script.Script;
