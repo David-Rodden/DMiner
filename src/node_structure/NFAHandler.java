@@ -15,11 +15,11 @@ public class NFAHandler {
         this.ref = ref;
     }
 
-    public Script getRef() {
+    Script getRef() {
         return ref;
     }
 
-    public RS2Object getNearestRock() {
+    RS2Object getNearestRock() {
         return ref.getObjects().closest(rocks);
     }
 
@@ -27,6 +27,12 @@ public class NFAHandler {
      * Initializes the flow of the NFS nodes
      */
     public void init() {
+        final NFANode initializer = new Setup(this);
+        NFANode current = initializer;
+        current.setSuccess(current = new WalkToRock(this));
+        current.setSuccess(current = new MineRock(this));
+        current.setSuccess(current = new DropRock(this));
+        current.setSuccess(pointer = initializer);
     }
 
     public void run() {

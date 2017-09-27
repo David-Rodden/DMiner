@@ -18,12 +18,14 @@ public class MineRock extends NFANode {
             sleepUntil(() -> !ref.myPlayer().isAnimating());
             return;
         }
-        ref.getObjects().closest(2, 3, 4).interact("Mine");
+        getHandler().getNearestRock().interact("Mine");
+        sleepUntil(() -> !ref.myPlayer().isAnimating());
     }
 
     @Override
     protected NFANode determine() {
-        return getHandler().getRef().getInventory().isFull() ? getSuccess() : null;
+        final Script ref = getHandler().getRef();
+        return ref.getInventory().isFull() ? getSuccess() : getHandler().getNearestRock().getPosition().distance(ref.myPosition()) > NFAHandler.MAX_ROCK_DISTANCE ? getFailure() : null;
     }
 
     @Override

@@ -5,8 +5,8 @@ import gui.MinerGUI;
 public class Setup extends NFANode {
     private MinerGUI gui;
 
-    protected Setup(final NFAHandler handler, final String description) {
-        super(handler, description);
+    Setup(final NFAHandler handler) {
+        super(handler, "Setting up bot");
         gui = new MinerGUI(handler);
     }
 
