@@ -10,11 +10,11 @@ public class GUIClickListener implements MouseListener {
 
     public GUIClickListener(final Setup setup) {
         this.setup = setup;
-    }
+    }g
 
     @Override
     public void mouseClicked(final MouseEvent e) {
-        setup.getRef().getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.exists() && obj.hasAction("Mine")).forEach(setup::manageRocks);
+        setup.getRef().getObjects().getAll().stream().filter(obj -> obj.exists() && obj.hasAction("Mine") && setup.getRef().getMouse().isOnCursor(obj)).forEach(setup::manageRocks);
     }
 
     @Override

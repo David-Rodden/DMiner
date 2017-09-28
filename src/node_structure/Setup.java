@@ -3,10 +3,12 @@ package node_structure;
 import gui.MinerGUI;
 import gui.listener.GUIClickListener;
 import org.osbot.rs07.api.model.Entity;
+import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.api.util.GraphicUtilities;
 import org.osbot.rs07.script.Script;
 
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -16,7 +18,7 @@ public class Setup extends NFANode {
     private static final Color empty = new Color(255, 197, 0, 180);
     private static final Color selection = new Color(27, 255, 0, 180);
     private MinerGUI gui;
-    private List<Entity> rocks;
+    private List<RS2Object> rocks;
     private Script ref;
 
     Setup(final NFAHandler handler) {
@@ -24,13 +26,14 @@ public class Setup extends NFANode {
         gui = new MinerGUI(handler);
         ref = handler.getRef();
         handler.getRef().getBot().addMouseListener(new GUIClickListener(this));
+        rocks = new ArrayList<>();
     }
 
     public Script getRef() {
         return ref;
     }
 
-    public void manageRocks(final Entity rock) {
+    public void manageRocks(final RS2Object rock) {
         if (rocks.contains(rock)) rocks.remove(rock);
         else rocks.add(rock);
     }
@@ -56,6 +59,6 @@ public class Setup extends NFANode {
 
     @Override
     protected void transition() {
-
+        getHandler().setRocks(rocks);
     }
 }

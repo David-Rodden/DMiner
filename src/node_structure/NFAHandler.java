@@ -20,7 +20,7 @@ public class NFAHandler {
         return ref;
     }
 
-    protected void setRocks(final List<RS2Object> rocks) {
+    void setRocks(final List<RS2Object> rocks) {
         this.rocks = rocks;
     }
 

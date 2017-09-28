@@ -7,7 +7,7 @@ import org.osbot.rs07.script.Script;
 public class MineRock extends NFANode {
     private RS2Object rock;
 
-    protected MineRock(final NFAHandler handler) {
+    MineRock(final NFAHandler handler) {
         super(handler, "Mining rock");
     }
 
