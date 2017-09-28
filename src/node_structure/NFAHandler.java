@@ -40,6 +40,10 @@ public class NFAHandler {
         current.setSuccess(loopPoint);
     }
 
+    public String getCurrentDescription() {
+        return pointer.getDescription();
+    }
+
     public void drawWireFrame(final Graphics2D g) {
         if (pointer instanceof Setup) ((Setup) pointer).drawRockWireFrame(g);
     }

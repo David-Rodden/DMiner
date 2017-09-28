@@ -17,6 +17,10 @@ public abstract class NFANode {
         return handler;
     }
 
+    String getDescription() {
+        return description;
+    }
+
     protected abstract void action();
 
     protected abstract NFANode determine();

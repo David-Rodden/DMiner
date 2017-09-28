@@ -29,5 +29,7 @@ public class Miner extends Script {
     @Override
     public void onPaint(final Graphics2D g) {
         handler.drawWireFrame(g);
+        g.setPaint(Color.YELLOW);
+        g.drawString(handler.getCurrentDescription(), 50, 50);  //default for description
     }
 }

@@ -46,7 +46,7 @@ public class Setup extends NFANode {
         return gui.formSent() ? getSuccess() : null;
     }
 
-    protected void drawRockWireFrame(final Graphics2D g) {
+    void drawRockWireFrame(final Graphics2D g) {
         final List<Entity> rocksFocused = Stream.concat(rocks.stream(), ref.getMouse().getEntitiesOnCursor().stream()).collect(Collectors.toList());
         for (final Entity rock : rocksFocused) {
             g.setPaint(!rocks.contains(rock) ? selection : rock.exists() ? present : empty);
