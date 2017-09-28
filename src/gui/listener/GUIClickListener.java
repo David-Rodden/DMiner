@@ -1,4 +1,4 @@
-package gui;
+package gui.listener;
 
 import node_structure.Setup;
 
@@ -14,7 +14,7 @@ public class GUIClickListener implements MouseListener {
 
     @Override
     public void mouseClicked(final MouseEvent e) {
-
+        setup.getRef().getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.exists() && obj.hasAction("Mine")).forEach(setup::manageRocks);
     }
 
     @Override

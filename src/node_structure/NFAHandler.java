@@ -3,6 +3,7 @@ package node_structure;
 import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.script.Script;
 
+import java.awt.*;
 import java.util.List;
 
 public class NFAHandler {
@@ -31,12 +32,16 @@ public class NFAHandler {
      * Initializes the flow of the NFS nodes
      */
     public void init() {
-        final NFANode initializer = new Setup(this);
-        NFANode current = initializer;
-        current.setSuccess(current = new WalkToRock(this));
+        NFANode current = pointer = new Setup(this);
+        final NFANode loopPoint = new WalkToRock(this);
+        current.setSuccess(current = loopPoint);
         current.setSuccess(current = new MineRock(this));
         current.setSuccess(current = new DropRock(this));
-        current.setSuccess(pointer = initializer);
+        current.setSuccess(loopPoint);
+    }
+
+    public void drawWireFrame(final Graphics2D g) {
+        if (pointer instanceof Setup) ((Setup) pointer).drawRockWireFrame(g);
     }
 
     public void run() {
