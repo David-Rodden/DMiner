@@ -8,16 +8,15 @@ public class MinerGUI extends JFrame {
     private NFAHandler handler;
     private JPanel mainPanel;
     private JButton runButton;
-    private JButton commenceButton;
     private boolean hasDisposed;
 
     public MinerGUI(final NFAHandler handler) {
         this.handler = handler;
-        commenceButton.addActionListener(e -> {
+        init();
+        runButton.addActionListener(e -> {
             dispose();
             hasDisposed = true;
         });
-        init();
     }
 
     private void init() {

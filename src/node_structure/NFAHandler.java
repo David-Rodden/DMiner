@@ -1,5 +1,7 @@
 package node_structure;
 
+import data_type.Rock;
+import org.osbot.rs07.api.model.Entity;
 import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.script.Script;
 
@@ -7,10 +9,11 @@ import java.awt.*;
 import java.util.List;
 
 public class NFAHandler {
-    static final int MAX_ROCK_DISTANCE = 1;
+    private static final int MAX_ROCK_DISTANCE = 1;
     private final Script ref;
     private NFANode pointer;
-    private List<RS2Object> rocks;
+    private List<Rock> rocks;
+    private RS2Object focusedRock;
 
     public NFAHandler(final Script ref) {
         this.ref = ref;
@@ -20,12 +23,13 @@ public class NFAHandler {
         return ref;
     }
 
-    void setRocks(final List<RS2Object> rocks) {
+    void setRocks(final List<Rock> rocks) {
         this.rocks = rocks;
     }
 
     RS2Object getNearestRock() {
-        return ref.getObjects().closest(rocks);
+        //noinspection unchecked
+        return ref.getObjects().closest(Entity::exists, rocks::contains);
     }
 
     /**
@@ -35,9 +39,23 @@ public class NFAHandler {
         NFANode current = pointer = new Setup(this);
         final NFANode loopPoint = new WalkToRock(this);
         current.setSuccess(current = loopPoint);
-        current.setSuccess(current = new MineRock(this));
+        final NFANode mineRock = new MineRock(this);
+        current.setSuccess(current = mineRock);
+        current.setFailure(loopPoint);
         current.setSuccess(current = new DropRock(this));
         current.setSuccess(loopPoint);
+    }
+
+    RS2Object getFocusedRock() {
+        return focusedRock;
+    }
+
+    void setFocusedRock(final RS2Object focusedRock) {
+        this.focusedRock = focusedRock;
+    }
+
+    boolean isInProximity(final RS2Object rock) {
+        return rock != null && rock.getPosition().distance(ref.myPosition()) == MAX_ROCK_DISTANCE;
     }
 
     public String getCurrentDescription() {
@@ -46,6 +64,8 @@ public class NFAHandler {
 
     public void drawWireFrame(final Graphics2D g) {
         if (pointer instanceof Setup) ((Setup) pointer).drawRockWireFrame(g);
+        else if (pointer instanceof WalkToRock) ((WalkToRock) pointer).drawRockWireFrame(g);
+        else if (pointer instanceof MineRock) ((MineRock) pointer).drawRockWireFrame(g);
     }
 
     public void run() {

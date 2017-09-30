@@ -1,9 +1,9 @@
 package node_structure;
 
+import data_type.Rock;
 import gui.MinerGUI;
 import gui.listener.GUIClickListener;
 import org.osbot.rs07.api.model.Entity;
-import org.osbot.rs07.api.model.RS2Object;
 import org.osbot.rs07.api.util.GraphicUtilities;
 import org.osbot.rs07.script.Script;
 
@@ -14,11 +14,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Setup extends NFANode {
-    private static final Color present = new Color(234, 41, 244, 180);
-    private static final Color empty = new Color(255, 197, 0, 180);
-    private static final Color selection = new Color(27, 255, 0, 180);
     private MinerGUI gui;
-    private List<RS2Object> rocks;
+    private List<Rock> rocks;
     private Script ref;
 
     Setup(final NFAHandler handler) {
@@ -33,7 +30,7 @@ public class Setup extends NFANode {
         return ref;
     }
 
-    public void manageRocks(final RS2Object rock) {
+    public void manageRocks(final Rock rock) {
         if (rocks.contains(rock)) rocks.remove(rock);
         else rocks.add(rock);
     }
@@ -50,9 +47,10 @@ public class Setup extends NFANode {
     }
 
     void drawRockWireFrame(final Graphics2D g) {
-        final List<Entity> rocksFocused = Stream.concat(rocks.stream(), ref.getMouse().getEntitiesOnCursor().stream()).collect(Collectors.toList());
+        final List<Entity> hovered = ref.getMouse().getEntitiesOnCursor().stream().filter(obj -> obj.exists() && obj.hasAction("Mine")).collect(Collectors.toList());
+        final List<Entity> rocksFocused = Stream.concat(rocks.stream().map(Rock::getEntity).collect(Collectors.toList()).stream(), hovered.stream()).collect(Collectors.toList());
         for (final Entity rock : rocksFocused) {
-            g.setPaint(!rocks.contains(rock) ? selection : rock.exists() ? present : empty);
+            g.setPaint(hovered.contains(rock) ? selection : rock.exists() ? present : empty);
             GraphicUtilities.drawModel(ref.getBot(), g, rock.getGridX(), rock.getGridY(), rock.getZ(), rock.getModel());
         }
     }

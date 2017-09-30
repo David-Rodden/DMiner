@@ -10,7 +10,7 @@ public class GUIClickListener implements MouseListener {
 
     public GUIClickListener(final Setup setup) {
         this.setup = setup;
-    }g
+    }
 
     @Override
     public void mouseClicked(final MouseEvent e) {
